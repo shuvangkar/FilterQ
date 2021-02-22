@@ -9,7 +9,10 @@
 
 typedef struct filterq_t
 {
-  void *_bufPtr;
+  void *_baseAddr;
+  void *_lastAddr;
+  void *_head;
+  void *_tail;
   void (*push)(filterq_t *obj, void *data);
 
 }filterq_t;
