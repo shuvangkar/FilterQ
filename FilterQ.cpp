@@ -5,16 +5,26 @@
 #include <stddef.h>
 static void pushData(filterq_t *fq, void *valuePtr);
 
+char testbuf[32];
 
-filterq_t *filterq_create(uint8_t bufLen, uint8_t varLen)
+void printAddr(char *buf, void *ptr)
+{
+  sprintf(buf," Addr : %p", ptr);
+  Serial.println(buf);
+}
+filterq_t *filterq_create(void *bufPtr,uint8_t varSz uint8_t bufSz)
 {
   void *_baseAddr;
   void *_lastAddr;
   filterq_t *fq = malloc(sizeof(filterq_t));
   if (fq != NULL)
   {
-    fq -> _baseAddr = malloc((bufLen + 1) * varLen);
-    fq -> _lastAddr = _baseAddr + (bufLen + 1) * varLen;
+    Serial.println(F("Object Memory allocated"));
+    printAddr(testbuf,fq);
+    fq -> _baseAddr = bufPtr;
+    fq -> _varSz = varSz;
+    printAddr(testbuf,fq -> _baseAddr);
+    fq -> _lastAddr = _baseAddr + bufSz;
 
     fq -> _head = _baseAddr;
     fq -> _tail = _baseAddr;
@@ -26,5 +36,5 @@ filterq_t *filterq_create(uint8_t bufLen, uint8_t varLen)
 //Methods
 static void pushData(filterq_t *fq, void *valuePtr)
 {
-
+  
 }
